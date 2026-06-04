@@ -1,6 +1,6 @@
 <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
     <div class="container-fluid navbar-inner">
-        <h4 class="logo-title">Stok Baja</h4>
+        <h4 class="logo-title">Stok Buku</h4>
         <div class="input-group search-input">
             <input type="search" class="form-control" placeholder="Cari barang, kategori, atau laporan...">
         </div>
@@ -15,8 +15,8 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profil</a></li>
-                        <li><a class="dropdown-item" href="{{ route('profile.password') }}">Ubah Password</a></li>
+                        <li><a class="dropdown-item" href="#">Profil</a></li>
+                        <li><a class="dropdown-item" href="#">Ubah Password</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST" class="mb-0">
