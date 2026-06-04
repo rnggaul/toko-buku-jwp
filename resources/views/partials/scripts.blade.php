@@ -1,0 +1,11 @@
+<script src="{{ asset('hope-ui/assets/js/core/libs.min.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/js/core/external.min.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/js/charts/widgetcharts.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/js/charts/vectore-chart.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/js/charts/dashboard.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/js/plugins/fslightbox.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/js/plugins/setting.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/js/plugins/slider-tabs.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/js/plugins/form-wizard.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/vendor/aos/dist/aos.js') }}"></script>
+<script src="{{ asset('hope-ui/assets/js/hope-ui.js') }}" defer></script>
