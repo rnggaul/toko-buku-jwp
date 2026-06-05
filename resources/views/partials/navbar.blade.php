@@ -1,9 +1,9 @@
 <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
     <div class="container-fluid navbar-inner">
         <h4 class="logo-title">Stok Buku</h4>
-        <div class="input-group search-input">
+        <!-- <div class="input-group search-input">
             <input type="search" class="form-control" placeholder="Cari barang, kategori, atau laporan...">
-        </div>
+        </div> -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
                 <li class="nav-item dropdown">
