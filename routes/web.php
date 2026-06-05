@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -28,6 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/persediaan-barang', [InventoryController::class, 'index'])->name('inventory.index');
     Route::post('/persediaan-barang/transaksi', [InventoryController::class, 'storeTransaction'])->name('inventory.transaction.store');
 
-    // Lamporan
+    // Laporan
     Route::get('/laporan', [ReportController::class, 'index'])->name('reports.index'); 
+
+    // profil
+    Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/ubah-password', [ProfileController::class, 'password'])->name('profile.password');
+    Route::put('/ubah-password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 });
