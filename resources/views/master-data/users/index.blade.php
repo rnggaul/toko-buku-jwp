@@ -10,7 +10,7 @@
                 <div class="flex-wrap d-flex justify-content-between align-items-center text-white">
                     <div>
                         <h1>Manajemen Pengguna</h1>
-                        <p>Kelola hak akses pengguna dan akun administrator sistem aplikasi.</p>
+                        <p>Kelola hak akses pengguna, peranan (role), dan akun sistem aplikasi Toko Buku Jwp.</p>
                     </div>
                 </div>
             </div>
@@ -40,6 +40,17 @@
             </div>
             @endif
 
+            @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="header-title">
@@ -57,7 +68,8 @@
                                     <th width="5%">No</th>
                                     <th>Nama Lengkap</th>
                                     <th>Alamat Email</th>
-                                    <th>Status Akun</th>
+                                    <th>Role / Hak Akses</th>
+                                    <th>Status Hubungan</th>
                                     <th width="15%" class="text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -67,6 +79,13 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td><strong>{{ $user->name }}</strong></td>
                                     <td><span class="text-secondary">{{ $user->email }}</span></td>
+                                    <td>
+                                        @if($user->role === 'admin')
+                                        <span class="badge bg-primary">Administrator</span>
+                                        @else
+                                        <span class="badge bg-warning text-dark">Owner (Pemilik)</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if($user->id === auth()->id())
                                         <span class="badge bg-success">Aktif (Anda)</span>
@@ -93,6 +112,7 @@
                                     </td>
                                 </tr>
 
+                                {{-- Modal Edit Pengguna --}}
                                 <div class="modal fade" id="editUserModal{{ $user->id }}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -111,6 +131,14 @@
                                                     <div class="form-group mb-3">
                                                         <label class="form-label">Alamat Email <span class="text-danger">*</span></label>
                                                         <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label class="form-label">Role / Hak Akses <span class="text-danger">*</span></label>
+                                                        <select name="role" class="form-select" required>
+                                                            <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Administrator</option>
+                                                            <option value="owner" {{ $user->role === 'owner' ? 'selected' : '' }}>Owner (Pemilik)</option>
+                                                        </select>
+                                                        <small class="text-muted">Owner hanya diizinkan melihat modul Halaman Laporan.</small>
                                                     </div>
                                                     <div class="form-group mb-3">
                                                         <label class="form-label">Password Baru</label>
@@ -136,6 +164,7 @@
     </div>
 </div>
 
+{{-- Modal Tambah Pengguna Baru --}}
 <div class="modal fade" id="createUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -152,7 +181,15 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Alamat Email <span class="text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control" placeholder="Contoh: staffgudang@gmail.com" required>
+                        <input type="email" name="email" class="form-control" placeholder="Contoh: ownerbuku@gmail.com" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Role / Hak Akses <span class="text-danger">*</span></label>
+                        <select name="role" class="form-select" required>
+                            <option value="admin" selected>Administrator</option>
+                            <option value="owner">Owner (Pemilik)</option>
+                        </select>
+                        <small class="text-muted">Tentukan kedudukan user baru di dalam kontrol akses aplikasi.</small>
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Password <span class="text-danger">*</span></label>

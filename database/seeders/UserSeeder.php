@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin Toko Buku JWP',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password123'),
+            'role' => 'admin'
         ]);
     }
 }

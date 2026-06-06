@@ -26,12 +26,14 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:6',
+            'role' => 'required|in:admin,owner',
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role, // <-- INI TADI KETINGGALAN, SEKARANG SUDAH DITAMBAHKAN
         ]);
 
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil ditambahkan.');
@@ -46,11 +48,13 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:6',
+            'role' => 'required|in:admin,owner',
         ]);
 
         $userData = [
             'name' => $request->name,
             'email' => $request->email,
+            'role' => $request->role,
         ];
 
         // Jika password diisi, enkripsi dan masukkan ke array update

@@ -19,8 +19,8 @@
             <div class="col-md-12">
                 <div class="flex-wrap d-flex justify-content-between align-items-center">
                     <div>
-                        <h1>Laporan Persediaan</h1>
-                        <p>Lihat laporan transaksi barang masuk dan barang keluar berdasarkan periode tanggal.</p>
+                        <h1>Laporan Persediaan Buku</h1>
+                        <p>Lihat laporan transaksi buku masuk dan buku keluar berdasarkan periode tanggal.</p>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 <div class="card-header">
                     <div class="header-title">
                         <h4 class="card-title mb-1">Filter Laporan</h4>
-                        <p class="mb-0 text-secondary">Pilih jenis transaksi dan rentang tanggal untuk menampilkan laporan.</p>
+                        <p class="mb-0 text-secondary">Pilih jenis transaksi dan rentang tanggal untuk menampilkan laporan buku.</p>
                     </div>
                 </div>
                 <div class="card-body">
@@ -51,8 +51,8 @@
                                 <label class="form-label">Jenis Transaksi</label>
                                 <select name="type" class="form-select">
                                     <option value="">Semua Transaksi</option>
-                                    <option value="masuk" {{ request('type') == 'masuk' ? 'selected' : '' }}>Barang Masuk</option>
-                                    <option value="keluar" {{ request('type') == 'keluar' ? 'selected' : '' }}>Barang Keluar</option>
+                                    <option value="masuk" {{ request('type') == 'masuk' ? 'selected' : '' }}>Buku Masuk</option>
+                                    <option value="keluar" {{ request('type') == 'keluar' ? 'selected' : '' }}>Buku Keluar</option>
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
@@ -89,7 +89,7 @@
         <div class="col-md-4">
             <div class="card" data-aos="fade-up" data-aos-delay="500">
                 <div class="card-body">
-                    <p class="mb-1 text-secondary">Total Barang Masuk</p>
+                    <p class="mb-1 text-secondary">Total Buku Masuk</p>
                     <h3 class="mb-0 text-success">{{ number_format($totalIn) }}</h3>
                 </div>
             </div>
@@ -97,7 +97,7 @@
         <div class="col-md-4">
             <div class="card" data-aos="fade-up" data-aos-delay="550">
                 <div class="card-body">
-                    <p class="mb-1 text-secondary">Total Barang Keluar</p>
+                    <p class="mb-1 text-secondary">Total Buku Keluar</p>
                     <h3 class="mb-0 text-danger">{{ number_format($totalOut) }}</h3>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                 <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-3">
                     <div class="header-title">
                         <h4 class="card-title mb-1">Data Laporan Transaksi</h4>
-                        <p class="mb-0 text-secondary">Daftar transaksi persediaan sesuai filter yang dipilih.</p>
+                        <p class="mb-0 text-secondary">Daftar transaksi persediaan buku sesuai filter yang dipilih.</p>
                     </div>
                 </div>
                 <div class="card-body">
@@ -121,9 +121,9 @@
                         Jenis: 
                         <strong>
                             @if (request('type') == 'masuk')
-                            Barang Masuk
+                            Buku Masuk
                             @elseif (request('type') == 'keluar')
-                            Barang Keluar
+                            Buku Keluar
                             @else
                             Semua Transaksi
                             @endif
@@ -141,8 +141,8 @@
                                 <tr>
                                     <th width="5%">No</th>
                                     <th>Tanggal</th>
-                                    <th>Kode</th>
-                                    <th>Nama Barang</th>
+                                    <th>Kode Buku</th>
+                                    <th>Judul Buku</th>
                                     <th>Kategori</th>
                                     <th>Jenis</th>
                                     <th>Jumlah</th>
@@ -160,9 +160,9 @@
                                     <td>{{ $transaction->product->category->name ?? '-' }}</td>
                                     <td>
                                         @if ($transaction->type === 'masuk')
-                                        <span class="badge bg-success">Barang Masuk</span>
+                                        <span class="badge bg-success">Buku Masuk</span>
                                         @else
-                                        <span class="badge bg-danger">Barang Keluar</span>
+                                        <span class="badge bg-danger">Buku Keluar</span>
                                         @endif
                                     </td>
                                     <td>
@@ -179,9 +179,7 @@
                                     </td>
                                 </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="9" class="text-center text-muted">Tidak ada data transaksi sesuai filter.</td>
-                                </tr>
+                                {{-- Dikomentari atau dikosongkan agar DataTables menghandle status "Empty Table" lewat JS secara native --}}
                                 @endforelse
                             </tbody>
                         </table>
@@ -210,23 +208,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 [25, 50, 100, 'ALL']
             ],
             dom: '<"row align-items-center mb-3"<"col-md-4"l><"col-md-4 text-center"B><"col-md-4"f>>rt<"row align-items-center mt-3"<"col-md-6"i><"col-md-6"p>>',
+            language: {
+                emptyTable: "Tidak ada data transaksi sesuai filter."
+            },
             buttons: [
                 {
                     extend: 'excelHtml5',
                     text: 'Export Excel',
-                    title: 'Laporan Keluar Masuk Barang'
+                    title: 'Laporan Keluar Masuk Buku'
                 },
                 {
                     extend: 'pdfHtml5',
                     text: 'Export PDF',
-                    title: 'Laporan Keluar Masuk Barang',
+                    title: 'Laporan Keluar Masuk Buku',
                     orientation: 'landscape',
                     pageSize: 'A4'
                 },
                 {
                     extend: 'print',
                     text: 'Print',
-                    title: 'Laporan Keluar Masuk Barang'
+                    title: 'Laporan Keluar Masuk Buku'
                 }
             ]
         });

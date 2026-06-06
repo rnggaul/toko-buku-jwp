@@ -155,7 +155,7 @@
                             Belum ada transaksi.
                         </div>
                     @endforelse
-                    <a href="#" class="btn btn-outline-primary btn-sm w-100 mt-2">
+                    <a href="{{ route('reports.index') }}" class="btn btn-outline-primary btn-sm w-100 mt-2">
                         Lihat Laporan
                     </a>
                 </div>

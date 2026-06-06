@@ -47,7 +47,13 @@
                 <div class="card-body text-center">
                     <img src="{{ asset('hope-ui/assets/images/avatars/01.png') }}" alt="{{ $user->name }}" class="rounded-pill img-fluid avatar-130 mb-3">
                     <h4 class="mb-1">{{ $user->name }}</h4>
-                    <p class="text-muted mb-2">Administrator</p>
+                    <p class="text-muted mb-2">
+                        @if(auth()->user()->role === 'admin')
+                            Administrator
+                        @else
+                            {{ ucfirst(auth()->user()->role) }}
+                        @endif
+                    </p>
                     <span class="badge rounded-pill bg-primary">Aktif</span>
                     <hr>
                     <div class="text-start">
@@ -57,7 +63,13 @@
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">Role</span>
-                            <span class="fw-semibold">Admin</span>
+                            <span class="fw-semibold">
+                                @if(auth()->user()->role === 'admin')
+                                    Administrator
+                                @else
+                                    {{ ucfirst(auth()->user()->role) }}
+                                @endif
+                            </span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">Status Akun</span>
@@ -100,14 +112,16 @@
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Role</label>
-                                <input type="text" class="form-control" value="Admin" readonly>
-                                <small class="text-muted">Field role belum tersedia pada tabel users.</small>
+                                <label class="form-label">Role Pengguna</label>
+                                <input type="text" class="form-control" 
+                                    value="{{ auth()->user()->role === 'admin' ? 'Admin' : 'Owner' }}" 
+                                    readonly style="background-color: #e9ecef; cursor: not-allowed;">
+                                <small class="text-muted">Hak akses akun Anda di dalam sistem (Hanya dapat diubah oleh super user/sistem).</small>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Status Akun</label>
-                                <input type="text" class="form-control" value="Aktif" readonly>
-                                <small class="text-muted">Status ditampilkan sebagai informasi akun aktif.</small>
+                                <input type="text" class="form-control" value="Aktif" readonly style="background-color: #e9ecef; cursor: not-allowed;">
+                                <small class="text-muted">Informasi status keaktifan akun Anda saat ini.</small>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end gap-2">

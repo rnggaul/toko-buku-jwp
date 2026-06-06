@@ -19,19 +19,25 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // menu khusus admin
+    Route::middleware('role:admin')->group(function () {
+        // Master Data
+        Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+        Route::resource('products', \App\Http\Controllers\ProductController::class); 
+        Route::resource('users', \App\Http\Controllers\UserController::class); 
 
-    // Master Data
-    Route::resource('categories', \App\Http\Controllers\CategoryController::class);
-    Route::resource('products', \App\Http\Controllers\ProductController::class); 
-    Route::resource('users', \App\Http\Controllers\UserController::class); 
+        // Stok Barang
+        Route::get('/persediaan-barang', [InventoryController::class, 'index'])->name('inventory.index');
+        Route::post('/persediaan-barang/transaksi', [InventoryController::class, 'storeTransaction'])->name('inventory.transaction.store');
+    });
 
-    // Stok Barang
-    Route::get('/persediaan-barang', [InventoryController::class, 'index'])->name('inventory.index');
-    Route::post('/persediaan-barang/transaksi', [InventoryController::class, 'storeTransaction'])->name('inventory.transaction.store');
-
-    // Laporan
-    Route::get('/laporan', [ReportController::class, 'index'])->name('reports.index'); 
-
+    // menu khusus owner
+    Route::middleware('role:admin,owner')->group(function () {
+        // Laporan
+        Route::get('/laporan', [ReportController::class, 'index'])->name('reports.index');
+    });
+     
     // profil
     Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profil', [ProfileController::class, 'update'])->name('profile.update');

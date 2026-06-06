@@ -33,7 +33,7 @@
                         <span class="item-name">Dashboard</span>
                     </a>
                 </li>
-
+                @if(auth()->user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('inventory.*') ? 'active' : '' }}" href="{{ route('inventory.index') }}">
                         <span class="item-name">Persediaan Barang</span>
@@ -70,8 +70,10 @@
                                 <span class="item-name">Manajemen Pengguna</span>
                             </a>
                         </li>
+
                     </ul>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}">

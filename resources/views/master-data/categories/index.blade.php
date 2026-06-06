@@ -10,7 +10,7 @@
                 <div class="flex-wrap d-flex justify-content-between align-items-center text-white">
                     <div>
                         <h1>Kategori Barang</h1>
-                        <p>Kelola kategori data produk dan material bangunan.</p>
+                        <p>Kelola kategori data produk.</p>
                     </div>
                 </div>
             </div>
