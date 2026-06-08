@@ -57,11 +57,11 @@
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label class="form-label">Tanggal Awal</label>
-                                <input type="date" name="start_date" class="form-control" value="{{ request('start_date') }}">
+                                <input type="date" name="start_date" id="start_date" class="form-control" value="{{ request('start_date') }}">
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label class="form-label">Tanggal Akhir</label>
-                                <input type="date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+                                <input type="date" name="end_date" id="end_date" class="form-control" value="{{ request('end_date') }}">
                             </div>
                             <div class="col-md-3 mb-3">
                                 <div class="d-flex gap-2">
@@ -179,7 +179,6 @@
                                     </td>
                                 </tr>
                                 @empty
-                                {{-- Dikomentari atau dikosongkan agar DataTables menghandle status "Empty Table" lewat JS secara native --}}
                                 @endforelse
                             </tbody>
                         </table>
@@ -199,7 +198,24 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    const startDateInput = document.getElementById('start_date');
+    const endDateInput = document.getElementById('end_date');
+
+    function updateEndDateMin() {
+        if (startDateInput.value) {
+            endDateInput.min = startDateInput.value;
+            if (endDateInput.value && endDateInput.value < startDateInput.value) {
+                endDateInput.value = '';
+            }
+        } else {
+            endDateInput.removeAttribute('min');
+        }
+    }
+
+    updateEndDateMin();
+    startDateInput.addEventListener('change', updateEndDateMin);
+
     if (window.jQuery && $.fn.DataTable) {
         $('#laporanTable').DataTable({
             pageLength: 25,
